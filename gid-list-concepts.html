@@ -185,6 +185,8 @@ The output of this components will be as follows:
         },
         conceptsResponseChanged : function(newvalue, oldvalue){
             this.concepts = [];
+			this.apiEntity = '';
+			this.path = '';
             if(newvalue != null){
   	             this.async(function() {
   	         		this.concepts =  this.concepts.concat(newvalue.concepts);
