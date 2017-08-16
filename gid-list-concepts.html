@@ -59,7 +59,8 @@ The output of this components will be as follows:
          <!-- concepts -->	
 			<gid-api auto=false
 				method="GET" api-url={{conceptsUrl}} response='{{conceptsResponse}}'
-				api-timeout={{conceptsTimeout}} api-params={{conceptsParams}}></gid-api>			
+				api-params={{conceptsParams}} api-token = {{conceptsToken}}
+				api-timeout={{conceptsTimeout}} ></gid-api>			
 	    <!-- concepts -->
 
   </template>
@@ -69,6 +70,11 @@ The output of this components will be as follows:
       Polymer({
         is:'gid-list-concepts',
         properties:{
+	        	apiToken: {
+	            	type: String,
+	                notify: true,
+	                value : ''
+	            },
 	        	apiUrl:{
 	            	type: String,
 	    	        notify: true,
@@ -92,6 +98,10 @@ The output of this components will be as follows:
 	     	   		type: String,
 	     	   		notify : true
      	   	    },
+     	   		conceptsToken: {
+	             	type: String,
+	                notify: true
+	             },
      	   	    concepts: {
      	          type: Array,
      	          value: [],
@@ -151,6 +161,9 @@ The output of this components will be as follows:
   	        	  "user": this.user,
   	        	  "offset": this.offset,
   	        	  "limit": this.limit});
+       			if(this.apiToken){
+       				this.conceptsToken =  this.apiToken;
+       			}
        			this.conceptsTimeout =  this.conceptsTimeout - 1;
         		
         	}
