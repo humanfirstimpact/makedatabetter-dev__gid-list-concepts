@@ -13,70 +13,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <title>gid list concepts</title>
 
-    <link rel="import" href="../gid-list-concepts.html">
-    <style>
-	  	table, th, td {
-	    border: 1px solid grey;
-	    border-collapse: collapse;
-		}
-		td {
-		    text-align: center;
-		}
-  	</style>
+    <link rel="import" href="list-concepts.html">
 </head>
 <body unresolved>
-<h1>Concepts</h1>
-
-<div class="horizontal-section-container">
-    <template is="dom-bind" id="app">
-        <gid-list-concepts api-url='https://ql50yzu0fj.execute-api.us-east-1.amazonaws.com/dev' user='1' 
-        limit = '1000' offset = '0' api-token = 'VVNfMjItMzg0MjY1N18xMTA1MTY0MzI5NzY0MTUwMjQ1MTUxMTQ1MzI3MDFY'
-        concepts='{{concepts}}'></gid-list-concepts>
-            <template is="dom-if" if="[[concepts.length]]">
-            <div class="horizontal-section">
-                <table style="width:100%">
-				  <tr>
-				    <th>Concept</th>
-				    <th>Owner</th>
-				    <th>Predicted Columns</th>
-				    <th>Confirmed Columns</th>
-				    <th>ETA</th>
-				    <th>Coverage</th>
-				    <th>Impact Area</th> 
-				    <th>Classification Accuracy Percentage</th>
-				    <th>Applications</th>
-				  </tr>
-				  <template is="dom-repeat" items="[[concepts]]">
-				  <tr>
-				    <td>{{item.label}}</td>
-				    <td>{{item.owner.label}}</td>
-				    <td>{{item.predictedColumns}}</td>
-				    <td>{{item.confirmedColumns}}</td>
-				    <td>{{item.eta}}</td>
-				    <td>{{item.coverage}}</td>				    
-				    <td>
-				     <template is="dom-repeat" items="[[item.impactArea]]">
-				     	{{item.label}} &nbsp;
-				     </template>
-				    </td> 
-				    <td>{{item.classificationAccuracyPercentage}}</td>	    
-				    <td>
-				     <template is="dom-repeat" items="[[item.applications]]">
-				     	{{item.label}} &nbsp;
-				     </template>
-				    </td>
-				  </tr>
-				 </template>
-				</table>
-            </div>
-            </template>
-    </template>
-</div>
-
+<list-concepts></list-concepts>
 <script>
-    var app = document.querySelector('#app');
-
-
 </script>
 </body>
 </html>

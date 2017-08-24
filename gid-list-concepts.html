@@ -9,9 +9,11 @@
 
 A data component to get list of concepts and its metadata for given user id
 
-    <gid-list-concepts user='1' concepts='{{concepts}}'></<gid-list-concepts>
+    <gid-list-concepts user='1' concepts='{{concepts}}'></gid-list-concepts>
     
 The property 'user' is mandatory.
+
+- `limit`  & `offset` - use limit and offset parameters to paginate records
 
 If 'apiUrl' is not provided, then the component would fetch sample data from mock json.
 
@@ -53,12 +55,12 @@ The output of this components will be as follows:
 <dom-module id="gid-list-concepts">
   <template>
  		 <!-- fetch entity path  -->
-        	<gid-api entity = '{{apiEntity}}' path='{{path}}'></gid-api>
+        	<gid-api entity = '{{apiEntity}}' path-key= '{{pathKey}}' path='{{path}}'></gid-api>
          <!--  fetch entity path -->
          
          <!-- concepts -->	
 			<gid-api auto=false
-				method="GET" api-url={{conceptsUrl}} response='{{conceptsResponse}}'
+				method="GET" api-url={{conceptsUrl}} response='{{conceptsResponse}}' error='{{conceptsError}}'
 				api-params={{conceptsParams}} api-token = {{conceptsToken}}
 				api-timeout={{conceptsTimeout}} ></gid-api>			
 	    <!-- concepts -->
@@ -92,7 +94,12 @@ The output of this components will be as follows:
         	    conceptsResponse : {
 	     	  		type : Object,
 	     	  		notify : true,
-	     	  		observer : 'conceptsResponseChanged'
+	     	  		observer : 'conceptsResponseReceived'
+        	  	},
+        	  	conceptsError : {
+        	  		type : Object,
+	     	  		notify : true,
+	     	  		observer : 'conceptsErrorReceived'
         	  	},
         	    conceptsParams : {
 	     	   		type: String,
@@ -101,7 +108,12 @@ The output of this components will be as follows:
      	   		conceptsToken: {
 	             	type: String,
 	                notify: true
-	             },
+	            },
+             	paramsArr: {
+  	           	   type: Array,
+  	           	   notify: true,
+  	           	   value: ["offset", "limit", "user"]
+                },
      	   	    concepts: {
      	          type: Array,
      	          value: [],
@@ -123,6 +135,12 @@ The output of this components will be as follows:
      	        	notify :  true,
                     observer: 'userModified'
      	        },
+     	        pathKey: {
+                	type: String,
+                    notify: true,
+                    value: '',
+                    observer: 'pathReceived'
+                },
                 path: {
                 	type: String,
                     notify: true,
@@ -142,6 +160,7 @@ The output of this components will be as follows:
 	                this.conceptsTimeout =  this.conceptsTimeout - 1;
       			}
         		else {
+        			this.pathKey =  'default';
          			this.apiEntity = 'LIST-CONCEPTS';
          		}
          	}
@@ -157,10 +176,14 @@ The output of this components will be as follows:
         			}
         		}
        			this.conceptsUrl = this.apiUrl + res.join("");
-       			this.conceptsParams = JSON.stringify({
-  	        	  "user": this.user,
-  	        	  "offset": this.offset,
-  	        	  "limit": this.limit});
+       			var paramsObj = {};
+       			for (var i in this.paramsArr){
+                	if(this[this.paramsArr[i]]){
+                		paramsObj[this.paramsArr[i]]= this[this.paramsArr[i]];;
+                		}
+                	
+                }
+       			this.conceptsParams = JSON.stringify(paramsObj);
        			if(this.apiToken){
        				this.conceptsToken =  this.apiToken;
        			}
@@ -168,16 +191,29 @@ The output of this components will be as follows:
         		
         	}
         },
-        conceptsResponseChanged : function(newvalue, oldvalue){
+        conceptsResponseReceived : function(newvalue, oldvalue){
             this.concepts = [];
-			this.apiEntity = '';
-			this.path = '';
+            this.reset();
             if(newvalue != null){
   	             this.async(function() {
   	         		this.concepts =  this.concepts.concat(newvalue.domains);
   	   		 	          }, 500);
             }
            	
+           },
+         conceptsErrorReceived : function(newvalue, oldvalue){
+            this.concepts = [];
+            this.reset();
+            if(newvalue != null){
+  	             this.async(function() {
+  	         		this.concepts =  this.concepts.concat(newvalue.response);
+  	   		 	          }, 500);
+            }
+           	
+           },
+           reset : function(){
+        	   this.apiEntity = '';
+   			   this.path = '';
            }
       });
     })();
