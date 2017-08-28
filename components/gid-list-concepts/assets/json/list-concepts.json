@@ -1,132 +1,17 @@
 {
-	"concepts": [{
-		"id": "100462",
-		"label": "SAMPLE CASE-NUMBER",
-		"owner": {
-			"id": "111001",
-			"label": "SAMPLE User 1"
-		},
-		"predictedColumns": 0,
-		"confirmedColumns": 0,
-		"eta": 0,
-		"coverage": 0.0,
-		"impactArea": [{
-			"id": "120002",
-			"label": "SAMPLE Credit Risk"
-		}, {
-			"id": "120001",
-			"label": "SAMPLE GDPR"
-		}],
-		"classificationAccuracyPercentage": 5.0,
-		"applications": [{
-			"id": "100492",
-			"label": "SAMPLE Universal Biller"
-		}, {
-			"id": "100252",
-			"label": "SAMPLE Supplier Management Program"
-		}, {
-			"id": "100495",
-			"label": "SAMPLE Field Service Support"
-		}, {
-			"id": "100447",
-			"label": "SAMPLE Contract Mgmt System"
-		}]
-	}, {
-		"id": "100450",
-		"label": "SAMPLE ACCOUNT-STATUS",
-		"owner": {
-			"id": "111001",
-			"label": "SAMPLE User 1"
-		},
-		"predictedColumns": 0,
-		"confirmedColumns": 0,
-		"eta": 0,
-		"coverage": 0.0,
-		"impactArea": [{
-			"id": "120002",
-			"label": "SAMPLE Credit Risk"
-		}, {
-			"id": "120001",
-			"label": "SAMPLE GDPR"
-		}],
-		"classificationAccuracyPercentage": 5.0,
-		"applications": [{
-			"id": "100495",
-			"label": "SAMPLE Field Service Support"
-		}, {
-			"id": "100252",
-			"label": "SAMPLE Supplier Management Program"
-		}, {
-			"id": "100447",
-			"label": "SAMPLE Contract Mgmt System"
-		}, {
-			"id": "100492",
-			"label": "SAMPLE Universal Biller"
-		}]
-	}, {
-		"id": "100481",
-		"label": "SAMPLE PRODUCT-CODE",
-		"owner": {
-			"id": "111001",
-			"label": "SAMPLE User 1"
-		},
-		"predictedColumns": 0,
-		"confirmedColumns": 0,
-		"eta": 0,
-		"coverage": 0.0,
-		"impactArea": [{
-			"id": "120002",
-			"label": "SAMPLE Credit Risk"
-		}, {
-			"id": "120001",
-			"label": "SAMPLE GDPR"
-		}],
-		"classificationAccuracyPercentage": 5.0,
-		"applications": [{
-			"id": "100447",
-			"label": "SAMPLE Contract Mgmt System"
-		}, {
-			"id": "100495",
-			"label": "SAMPLE Field Service Support"
-		}, {
-			"id": "100252",
-			"label": "SAMPLE Supplier Management Program"
-		}, {
-			"id": "100492",
-			"label": "SAMPLE Universal Biller"
-		}]
-	}, {
-		"id": "100484",
-		"label": "SAMPLE PURCHASE-ORDER-NUMBER",
-		"owner": {
-			"id": "111001",
-			"label": "SAMPLE User 1"
-		},
-		"predictedColumns": 0,
-		"confirmedColumns": 0,
-		"eta": 0,
-		"coverage": 0.0,
-		"impactArea": [{
-			"id": "120001",
-			"label": "SAMPLE GDPR"
-		}, {
-			"id": "120002",
-			"label": "SAMPLE Credit Risk"
-		}],
-		"classificationAccuracyPercentage": 5.0,
-		"applications": [{
-			"id": "100495",
-			"label": "SAMPLE Field Service Support"
-		}, {
-			"id": "100447",
-			"label": "SAMPLE Contract Mgmt System"
-		}, {
-			"id": "100492",
-			"label": "SAMPLE Universal Biller"
-		}, {
-			"id": "100252",
-			"label": "SAMPLE Supplier Management Program"
-		}]
-
-	}]
-}
+      "domains": [
+        {
+          "id": "100462",
+          "label": "SAMPLE CASE-NUMBER",
+          "owner": {
+            "id": "111001",
+            "label": "Angela"
+          },
+          "predictedColumns": 0,
+          "confirmedColumns": 0,
+          "eta": 0,
+          "coverage": 0,
+          "classificationAccuracyPercentage": 5
+        }    
+      ]
+    }
