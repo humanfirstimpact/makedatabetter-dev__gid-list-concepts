@@ -14,7 +14,7 @@
         <h1>Concepts</h1>
 
         <gid-list-concepts api-url='https://srv-34-197-77-167.globalids.com:8443/api/v1' user='1' 
-        limit = '1000' offset = '0' api-token = 'MTAxNjUwMzAxMTUwMzU1NjY3ODU3MDA5MDFY'
+        limit = '1000' offset = '0' api-token = 'MTAxNjUwMzAxMTUwMzk5MTgyNTkxMDA5MDFY'
         concepts='{{concepts}}'></gid-list-concepts>
             <template is="dom-if" if="[[conceptListReceived]]">
 	                <table style="width:100%">
@@ -54,7 +54,7 @@
             </template>
             <template is="dom-if" if="![[conceptListReceived]]">
 	            <div class="horizontal-section">
-	                <p>{{concepts.userMessage}}</p>
+	                <p>{{concepts.0.userMessage}}</p>
 	            </div>
         	</template>
   </template>
@@ -77,7 +77,7 @@
         },
         conceptsObserver: function () {
         	 if(this.concepts){	
-				if(this.concepts.errorCode){
+				if(this.concepts[0]['errorCode']){
 					this.conceptListReceived = false;
 				}
 				else{
