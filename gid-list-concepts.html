@@ -56,15 +56,15 @@ The output of this components will be as follows:
 -->
 <dom-module id="gid-list-concepts">
   <template>
- 		 <!-- fetch entity _path  -->
-        	<gid-api entity = '{{_apiEntity}}' path-key= '{{__pathKey}}' path='{{_path}}'></gid-api>
-         <!--  fetch entity _path -->
+ 		 <!-- fetch entity path  -->
+        	<gid-api entity = '{{apiEntity}}' path-key= '{{pathKey}}' path='{{path}}'></gid-api>
+         <!--  fetch entity path -->
          
          <!-- concepts -->	
 			<gid-api auto=false
-				method="GET" api-url={{_conceptsUrl}} response='{{_conceptsResponse}}' error='{{_conceptsError}}'
-				api-params={{_conceptsParams}} api-token = {{_conceptsToken}}
-				api-timeout={{_conceptsTimeout}} ></gid-api>			
+				method="GET" api-url={{conceptsUrl}} response='{{conceptsResponse}}' error='{{conceptsError}}'
+				api-params={{conceptsParams}} api-token = {{conceptsToken}}
+				api-timeout={{conceptsTimeout}} ></gid-api>			
 	    <!-- concepts -->
 
   </template>
@@ -74,112 +74,101 @@ The output of this components will be as follows:
       Polymer({
         is:'gid-list-concepts',
         properties:{
-        	    /*Authorization token for accessing rest api*/
 	        	apiToken: {
 	            	type: String,
 	                notify: true,
 	                value : ''
 	            },
-	            
-	            /*Base url*/
 	        	apiUrl:{
 	            	type: String,
 	    	        notify: true,
 	    	        value: ''
 	    	 	},
-        	   _conceptsUrl:{
+        	   conceptsUrl:{
                 	type: String,
         	        notify: true
         	 	},
-        	    _conceptsTimeout : {
+        	    conceptsTimeout : {
             		type: Number,
         	        notify: true,
         	        value : 0
         	    },
-        	    _conceptsResponse : {
+        	    conceptsResponse : {
 	     	  		type : Object,
 	     	  		notify : true,
-	     	  		observer : '_conceptsResponseReceived'
+	     	  		observer : 'conceptsResponseReceived'
         	  	},
-        	  	_conceptsError : {
+        	  	conceptsError : {
         	  		type : Object,
 	     	  		notify : true,
-	     	  		observer : '_conceptsErrorReceived'
+	     	  		observer : 'conceptsErrorReceived'
         	  	},
-        	    _conceptsParams : {
+        	    conceptsParams : {
 	     	   		type: String,
 	     	   		notify : true
      	   	    },
-     	   		_conceptsToken: {
+     	   		conceptsToken: {
 	             	type: String,
 	                notify: true
 	            },
-             	_paramsArr: {
+             	paramsArr: {
   	           	   type: Array,
   	           	   notify: true,
   	           	   value: ["offset", "limit", "user"]
                 },
-                
-                /*Object for storing success/error response*/
      	   	    concepts: {
      	          type: Array,
      	          value: [],
      	          notify: true
      	        },
-     	        
-     	        /*Limit parameter to paginate records*/
      	      	limit: {
                	   type: String,
                    notify: true,
                    value: ''
                 },
-                
-                /*Offset parameter to paginate records*/
                 offset: {
                 	type: String,
                 	notify: true,
                 	value: ''
                 },
-                
-                /*User Id*/
      	        user: {
      	        	type: String,
      	        	value : '',
      	        	notify :  true,
-                    observer: '_userModified'
+                    observer: 'userModified'
      	        },
-     	        __pathKey: {
+     	        pathKey: {
                 	type: String,
                     notify: true,
                     value: ''
                 },
-                _path: {
+                path: {
                 	type: String,
                     notify: true,
                     value: '',
-                    observer: '_pathReceived'
+                    observer: 'pathReceived'
                 },
-                _apiEntity: {
+                apiEntity: {
                 	type: String,
                     notify: true
                 }
                 
         },
-        _userModified:  function(){
+        userModified:  function(){
         	if (this.user) {
         	 	if (!this.apiUrl) {
-	      			this._conceptsUrl = this.importPath + 'assets/json/list-concepts.json';
-	                this._conceptsTimeout =  this._conceptsTimeout - 1;
+	      			this.conceptsUrl = this.importPath + 'assets/json/list-concepts.json';
+	                this.conceptsTimeout =  this.conceptsTimeout - 1;
       			}
         		else {
-        			this.__pathKey =  'default';
-         			this._apiEntity = 'LIST-CONCEPTS';
+        			this.pathKey =  'default';
+         			this.apiEntity = 'LIST-CONCEPTS';
          		}
          	}
         },
-        _pathReceived: function(){
-        	if(this._path){
-        		var res = this._path.split(/{([^}]+)}/);
+        pathReceived: function(){
+        	if(this.path){
+        		var res = this.path.split(/{([^}]+)}/);
         		for (var i in res) {
         			if(!res[i].startsWith("/")){
         					if(this[res[i]]){
@@ -187,24 +176,25 @@ The output of this components will be as follows:
         					}
         			}
         		}
-       			this._conceptsUrl = this.apiUrl + res.join("");
+       			this.conceptsUrl = this.apiUrl + res.join("");
        			var paramsObj = {};
-       			for (var i in this._paramsArr){
-                	if(this[this._paramsArr[i]]){
-                		paramsObj[this._paramsArr[i]]= this[this._paramsArr[i]];;
+       			for (var i in this.paramsArr){
+                	if(this[this.paramsArr[i]]){
+                		paramsObj[this.paramsArr[i]]= this[this.paramsArr[i]];;
                 		}
                 	
                 }
-       			this._conceptsParams = JSON.stringify(paramsObj);
+       			this.conceptsParams = JSON.stringify(paramsObj);
        			if(this.apiToken){
-       				this._conceptsToken =  this.apiToken;
+       				this.conceptsToken =  this.apiToken;
        			}
-       			this._conceptsTimeout =  this._conceptsTimeout - 1;
+       			this.conceptsTimeout =  this.conceptsTimeout - 1;
         		
         	}
         },
-        _conceptsResponseReceived : function(newvalue, oldvalue){
-            this._reset();
+        conceptsResponseReceived : function(newvalue, oldvalue){
+            this.concepts = [];
+            this.reset();
             if(newvalue != null){
   	             this.async(function() {
   	         		this.concepts =  this.concepts.concat(newvalue.domains);
@@ -212,8 +202,9 @@ The output of this components will be as follows:
             }
            	
            },
-         _conceptsErrorReceived : function(newvalue, oldvalue){
-            this._reset();
+         conceptsErrorReceived : function(newvalue, oldvalue){
+            this.concepts = [];
+            this.reset();
             if(newvalue != null){
   	             this.async(function() {
   	         		this.concepts =  this.concepts.concat(newvalue.response);
@@ -221,10 +212,9 @@ The output of this components will be as follows:
             }
            	
            },
-           _reset : function(){
-        	   this.concepts = [];
-        	   this._apiEntity = '';
-   			   this._path = '';
+           reset : function(){
+        	   this.apiEntity = '';
+   			   this.path = '';
            }
       });
     })();
